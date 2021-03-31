@@ -2,6 +2,9 @@
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
+import os
+from datetime import datetime
+import shutil
 
 
 class MemeEngine():
@@ -23,6 +26,10 @@ class MemeEngine():
         :param width: (int) Maximum allowed width of the image. Everything above will be downscaled.
         :return: Success string were the image is saved.
         """
+        # avoid meme buildup by deleting and recreating the static folder
+        shutil.rmtree('./static')
+        os.mkdir("./static")
+
         im = Image.open(img_path)
         # get the width of the image
         img_width = im.size[0]
@@ -30,7 +37,7 @@ class MemeEngine():
         # resize if image is too wide
         if img_width > width:
             factor = width / img_width
-            im = im.resize((im.size[0] * factor, im.size[1] * factor))
+            im = im.resize((int(im.size[0] * factor), int(im.size[1] * factor)))
 
         # load the font
         lilita = ImageFont.truetype("./fonts/LilitaOne-Regular.ttf", 25)
@@ -38,7 +45,11 @@ class MemeEngine():
         drawing = ImageDraw.Draw(im)
         drawing.multiline_text((20, 80), text, font=lilita, fill=(255, 255, 255))
         drawing.multiline_text((20, 110), author, font=lilita, fill=(255, 255, 255))
+        meme_path = self.output_dir + f"/meme_{datetime.now().strftime('%H_%M_%S')}.jpg"
+        try:
+            im.save(meme_path)
+        except:
+            os.mkdir(self.output_dir)
+            im.save(meme_path)
 
-        im.save(self.output_dir+"/meme.jpg")
-
-        return f"Saved the image to '{self.output_dir}'"
+        return meme_path

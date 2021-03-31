@@ -4,7 +4,7 @@ generates memes (An image with text and a quote author) or lets the user
 type in text and the author.
 # Running the program
 The program can be run by the CLI or a flask web app
-## Command line interface
+### Command line interface
 Main access is the `meme.py` script.
 Called without any options it will pull example images and quotes from the `_data` folder.
 Possible options are:  
@@ -20,7 +20,7 @@ The `MemeEngine` loads the image, resizes if necessary, adds the quote and
 saves the meme under the specified path.
 
 # Examples
-## CLI
+### CLI
 `python meme.py` Creates a random meme.  
 `python meme.py --body "To shit or not to shit." --author "Gnarles Barkley"`
 Puts this quote on a random picture.  
@@ -43,5 +43,3 @@ pytz==2021.1
 six==1.15.0  
 snowballstemmer==2.1.0  
 Werkzeug==1.0.1  
-
-# Examples
