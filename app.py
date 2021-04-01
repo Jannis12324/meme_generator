@@ -52,6 +52,12 @@ def meme_form():
     return render_template('meme_form.html')
 
 
+@app.errorhandler(Exception)
+def internal_error(error):
+    """Handle wrong URLs and show a custom error site."""
+    return render_template("error.html")
+
+
 @app.route('/create', methods=['POST'])
 def meme_post():
     """Create a user defined meme."""
@@ -60,6 +66,7 @@ def meme_post():
     url = request.form['image_url']
 
     img = requests.get(url, stream=True, allow_redirects=True).content
+
     # write the image to a temp file
     with open(temp_path, "wb") as outfile:
         outfile.write(img)
