@@ -5,6 +5,7 @@ from PIL import ImageDraw
 import os
 from datetime import datetime
 import shutil
+import math
 
 
 class MemeEngine():
@@ -15,6 +16,44 @@ class MemeEngine():
         if type(output_dir) is not str:
             raise Exception("Output dir is not of type string.")
         self.output_dir = str(output_dir)
+
+    def handle_linebreaks(self, x, y, max_characters, drawing, text):
+        """
+        Handle the linebreaks of text and author.
+        :param x: (int) x coordinate of the text.
+        :param y: (int) y coordinate of the text.
+        :param max_characters: (int) space available in the image.
+        :param drawing: drawing context on image object
+        :param text: (string) text to be written on the image.
+        :return: drawing object, new y coordinate
+        """
+        # calculate how many lines are needed:
+        lines = math.ceil(len(text) / max_characters)
+        # load the font
+        lilita = ImageFont.truetype("./fonts/LilitaOne-Regular.ttf", 25)
+        for i in range(lines):
+            drawing.multiline_text((x, y+(i*20)),
+                                   text[max_characters*i:max_characters*(i+1)],
+                                   font=lilita, fill=(255, 255, 255))
+        # calculate the y coordinate where the author starts
+        y = y+(lines*20)+25
+        return drawing, y
+
+    def draw_text(self, image, text, author):
+        """Write the text on the image."""
+
+        x = 20
+        y = 80
+        max_characters = 50
+
+        # get a drawing context
+        drawing = ImageDraw.Draw(image)
+        drawing, y = self.handle_linebreaks(x, y, max_characters,
+                                            drawing, text)
+        drawing, y = self.handle_linebreaks(x, y, max_characters,
+                                            drawing, author)
+
+        return drawing
 
     def make_meme(self, img_path, text, author, width=500) -> str:
         """
@@ -41,14 +80,7 @@ class MemeEngine():
             im = im.resize((int(im.size[0] * factor),
                             int(im.size[1] * factor)))
 
-        # load the font
-        lilita = ImageFont.truetype("./fonts/LilitaOne-Regular.ttf", 25)
-        # get a drawing context
-        drawing = ImageDraw.Draw(im)
-        drawing.multiline_text((20, 80), text,
-                               font=lilita, fill=(255, 255, 255))
-        drawing.multiline_text((20, 110), author,
-                               font=lilita, fill=(255, 255, 255))
+        drawing = self.draw_text(im, text, author)
         filename = f"/meme_{datetime.now().strftime('%H_%M_%S')}.jpg"
         meme_path = self.output_dir + filename
         try:

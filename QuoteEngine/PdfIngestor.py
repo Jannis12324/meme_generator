@@ -26,8 +26,7 @@ class PdfIngestor(IngestorInterface):
         temp = f".to_be_deletet.txt"
         # call the pdftotext tool
         # -layout makes sure the newlines are kept, so iteration will work
-        call = subprocess.call(["xpdf-tools-mac-4.03/bin64/pdftotext",
-                                "-layout", path, temp])
+        call = subprocess.call(["pdftotext", "-layout", path, temp])
         # iterate through the created txt file
         with open(temp, "r") as infile:
             for line in infile.readlines():

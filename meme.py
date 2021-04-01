@@ -56,5 +56,5 @@ if __name__ == "__main__":
         help="The author of the quote to add to the image.")
 
     args = parser.parse_args()
-
-    print(generate_meme(args.path, args.body, args.author))
+    created_meme = generate_meme(args.path, args.body, args.author)
+    print(f"New meme created at {created_meme}")

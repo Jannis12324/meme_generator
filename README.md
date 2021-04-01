@@ -34,6 +34,12 @@ Head to the browser and enter the server it is running on.
 Hit `random` to create a random meme.
 Hit `custom` to create one
 # Dependencies
+pdftotext of xpdfReader needs to be installed on the system and available over the command line.
+Download and install it [here](https://www.xpdfreader.com/pdftotext-man.html).  
+Mac:  
+Add the pdftotext to the path for the current terminal session:
+`PATH=$PATH:/Users/<<path to xpdf tools>>/xpdf-tools-mac-4.03/bin64`
+
 certifi==2020.12.5  
 chardet==4.0.0  
 click==7.1.2  
