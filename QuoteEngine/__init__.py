@@ -7,4 +7,3 @@ from .DocxIngestor import DocxIngestor
 from .TxtIngestor import TxtIngestor
 from .PdfIngestor import PdfIngestor
 from .Ingestor import Ingestor
-

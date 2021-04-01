@@ -12,7 +12,9 @@ class TxtIngestor(IngestorInterface):
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
-        """Parse QuoteModel objects of txt files and return a list of QuoteModels."""
+        """
+        Parse QuoteModel objects of txt files and return a list of QuoteModels.
+        """
         if not cls.can_ingest(path):
             raise Exception('Cannot Ingest Exception')
 

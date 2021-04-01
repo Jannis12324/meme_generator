@@ -13,7 +13,7 @@ class DocxIngestor(IngestorInterface):
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
-        """Parse QuoteModel objects of docx files and return a list of QuoteModels."""
+        """Parse QuoteModel obj of docx files and return a list of them."""
         if not cls.can_ingest(path):
             raise Exception('Cannot Ingest Exception')
 
@@ -23,7 +23,8 @@ class DocxIngestor(IngestorInterface):
         for line in doc.paragraphs:
             if line.text != "":
                 parse = line.text.split('-')
-                new_cat = QuoteModel(str(parse[0]).strip(' "'), str(parse[1]).strip(' "'))
+                new_cat = QuoteModel(str(parse[0]).strip(' "'),
+                                     str(parse[1]).strip(' "'))
                 quotes.append(new_cat)
 
         return quotes

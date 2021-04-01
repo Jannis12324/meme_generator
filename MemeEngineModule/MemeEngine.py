@@ -23,7 +23,8 @@ class MemeEngine():
         :param img_path: (str) path to image to load.
         :param text: (str) The quote body to be put on the image.
         :param author: (str) The author to be put beneath the quote body.
-        :param width: (int) Maximum allowed width of the image. Everything above will be downscaled.
+        :param width: (int) Maximum allowed width of the image.
+                    Everything above will be downscaled.
         :return: Success string were the image is saved.
         """
         # avoid meme buildup by deleting and recreating the static folder
@@ -37,18 +38,22 @@ class MemeEngine():
         # resize if image is too wide
         if img_width > width:
             factor = width / img_width
-            im = im.resize((int(im.size[0] * factor), int(im.size[1] * factor)))
+            im = im.resize((int(im.size[0] * factor),
+                            int(im.size[1] * factor)))
 
         # load the font
         lilita = ImageFont.truetype("./fonts/LilitaOne-Regular.ttf", 25)
         # get a drawing context
         drawing = ImageDraw.Draw(im)
-        drawing.multiline_text((20, 80), text, font=lilita, fill=(255, 255, 255))
-        drawing.multiline_text((20, 110), author, font=lilita, fill=(255, 255, 255))
-        meme_path = self.output_dir + f"/meme_{datetime.now().strftime('%H_%M_%S')}.jpg"
+        drawing.multiline_text((20, 80), text,
+                               font=lilita, fill=(255, 255, 255))
+        drawing.multiline_text((20, 110), author,
+                               font=lilita, fill=(255, 255, 255))
+        filename = f"/meme_{datetime.now().strftime('%H_%M_%S')}.jpg"
+        meme_path = self.output_dir + filename
         try:
             im.save(meme_path)
-        except:
+        except OSError:
             os.mkdir(self.output_dir)
             im.save(meme_path)
 

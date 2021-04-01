@@ -26,9 +26,19 @@ saves the meme under the specified path.
 Puts this quote on a random picture.  
 `python meme.py --path "example_image.jpg" --body "To shit or not to shit." --author "Gnarles Barkley"`
 Like the example above with a supplied image.
+
+###
+Start the flask web app by `python app.py`.
+The console will tell you the server it is running on.
+Head to the browser and enter the server it is running on.
+Hit `random` to create a random meme.
+Hit `custom` to create one
 # Dependencies
+certifi==2020.12.5  
+chardet==4.0.0  
 click==7.1.2  
 Flask==1.1.2  
+idna==2.10  
 itsdangerous==1.1.0  
 Jinja2==2.11.3  
 lxml==4.6.3  
@@ -40,6 +50,8 @@ pydocstyle==6.0.0
 python-dateutil==2.8.1  
 python-docx==0.8.10  
 pytz==2021.1  
+requests==2.25.1  
 six==1.15.0  
 snowballstemmer==2.1.0  
+urllib3==1.26.4  
 Werkzeug==1.0.1  
